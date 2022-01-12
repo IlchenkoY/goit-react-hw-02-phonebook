@@ -16,15 +16,18 @@ class App extends Component {
     filter: '',
   };
 
-  formSubmitHandler = data => {
+  formSubmitHandler = ({ name, number }) => {
     const contact = {
       id: shortid.generate(),
-      name: data.name,
-      number: data.number,
+      name,
+      number,
     };
 
     if (
-      this.state.contacts.find(contactsEl => contactsEl.name === contact.name)
+      this.state.contacts.find(
+        contactsEl =>
+          contactsEl.name.toLowerCase() === contact.name.toLowerCase(),
+      )
     ) {
       alert(`${contact.name} is already in contacts`);
       return;
@@ -44,7 +47,7 @@ class App extends Component {
     return contacts.filter(
       contact =>
         contact.name.toLowerCase().includes(filter.toLowerCase()) ||
-        contact.number.toLowerCase().includes(filter.toLowerCase()),
+        contact.number.includes(filter),
     );
   };
 
